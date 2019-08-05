@@ -1,0 +1,12 @@
+// It's safer use and .env file with your configurations data.
+// This is the model of the .env file needed for this BE system work ;)
+
+module.exports = {
+    authSecret: 'asda1w65d1aw1da65wd1$%@$#@$',
+    db: {
+        database: 'knowledge',
+        user:     'postgres',
+        password: '123456'
+    },
+    mongoUrl: 'mongodb://localhost/knowledge_stats'
+}

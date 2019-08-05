@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-npm install
+npm install inside backend and frontend folder
 ```
 
 ### Compiles and hot-reloads for development
