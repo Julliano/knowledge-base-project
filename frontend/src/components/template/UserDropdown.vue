@@ -61,7 +61,9 @@
             <i class="fa fa-angle-down"></i>
         </div>
         <div class="user-dropdown-content">
-            <a href=""><i class="fa fa-cogs"></i> Admin Panel </a>
+            <router-link to="/admin">
+                <i class="fa fa-cogs"></i> Admin Panel
+            </router-link>
             <a href=""><i class="fa fa-sign-out"></i> Logout </a>
         </div>
     </div>
