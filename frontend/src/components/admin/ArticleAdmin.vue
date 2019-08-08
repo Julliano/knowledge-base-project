@@ -1,0 +1,15 @@
+<style>
+
+</style>
+
+<template>
+    <div class="article-admin">
+        <h1>Article Component</h1>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'ArticleAdmin'
+}
+</script>
