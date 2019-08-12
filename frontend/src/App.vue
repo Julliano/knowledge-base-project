@@ -1,7 +1,7 @@
 <template>
-	<div id="app" :class="{'hide-menu': !isMenuVisible}">
-		<Header title="Volpato's Blog" :hideToggle="false" :hideUserDropdown="false" />
-		<Menu />
+	<div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
+		<Header title="Volpato's Blog" :hideToggle="!user" :hideUserDropdown="!user" />
+		<Menu v-if="user" />
 		<Content />
 		<Footer />
 	</div>
@@ -22,7 +22,7 @@ export default {
 		Footer,
 		Content
 	},
-	computed: mapState(['isMenuVisible'])
+	computed: mapState(['isMenuVisible', 'user'])
 }
 </script>
 

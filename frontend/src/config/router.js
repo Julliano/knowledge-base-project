@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import Home from '@/components/home/Home';
 import AdminPages from '@/components/admin/AdminPages';
 import ArticlesByCategory from '@/components/article/ArticleByCategory';
+import ArticlesById from '@/components/article/ArticleById';
+import Auth from '@/components/auth/auth';
 
 Vue.use(VueRouter);
 
@@ -19,6 +21,14 @@ const routes = [{
     name: 'articlesByCategory',
     path: '/categories/:id/articles',
     component: ArticlesByCategory
+}, {
+    name: 'articleById',
+    path: '/articles/:id',
+    component: ArticlesById
+}, {
+    name: 'auth',
+    path: '/auth',
+    component: Auth
 }];
 
 export default new VueRouter({
