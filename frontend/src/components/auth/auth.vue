@@ -52,20 +52,19 @@
         <div class="auth-modal">
             <img src="@/assets/logo.png" width="200" alt="Logo" />
             <hr>
-            <div class="auth-title">{{ showSignup ? 'Cadastro' : 'Login' }}</div>
+            <div class="auth-title">{{ showSignup ? 'Register' : 'Login' }}</div>
 
-            <input v-if="showSignup" v-model="user.name" type="text" placeholder="Nome">
-            <input v-model="user.email" name="email" type="text" placeholder="E-mail">
-            <input v-model="user.password" name="password" type="password" placeholder="Senha">
-            <input v-if="showSignup" v-model="user.confirmPassword"
-                type="password" placeholder="Confirme a Senha">
+            <input v-if="showSignup" v-model="user.name" type="text" placeholder="Name">
+            <input v-model="user.email" name="email" type="text" placeholder="Email">
+            <input v-model="user.password" name="password" type="password" placeholder="Password">
+            <input v-if="showSignup" v-model="user.confirmPassword" type="password" placeholder="Confirm password">
 
-            <button v-if="showSignup" @click="signup">Registrar</button>
-            <button v-else @click="signin">Entrar</button>
+            <button v-if="showSignup" @click="signup">Register</button>
+            <button v-else @click="signin">Enter</button>
 
             <a href @click.prevent="showSignup = !showSignup">
-                <span v-if="showSignup">Já tem cadastro? Acesse o Login!</span>
-                <span v-else>Não tem cadastro? Registre-se aqui!</span>
+                <span v-if="showSignup">Already have a registration? Access the Login!</span>
+                <span v-else>No registration? Register here!</span>
             </a>
         </div>
     </div>
@@ -86,18 +85,18 @@ export default {
         signin() {
             axios.post(`${baseApiUrl}/signin`, this.user)
                 .then(res => {
-                    this.$store.commit('setUser', res.data)
-                    localStorage.setItem(userKey, JSON.stringify(res.data))
-                    this.$router.push({ path: '/' })
+                    this.$store.commit('setUser', res.data);
+                    localStorage.setItem(userKey, JSON.stringify(res.data));
+                    this.$router.push({ path: '/' });
                 })
                 .catch(showError)
         },
         signup() {
             axios.post(`${baseApiUrl}/signup`, this.user)
                 .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.user = {}
-                    this.showSignup = false
+                    this.$toasted.global.defaultSuccess();
+                    this.user = {};
+                    this.showSignup = false;
                 })
                 .catch(showError)
         }

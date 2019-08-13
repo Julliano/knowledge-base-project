@@ -1,31 +1,3 @@
-<template>
-	<div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
-		<Header title="Volpato's Blog" :hideToggle="!user" :hideUserDropdown="!user" />
-		<Menu v-if="user" />
-		<Content />
-		<Footer />
-	</div>
-</template>
-
-<script>
-import { mapState } from 'vuex';
-import Header from './components/template/Header';
-import Menu from './components/template/Menu';
-import Footer from './components/template/Footer';
-import Content from './components/template/Content';
-
-export default {
-	name: "App",
-	components: {
-		Menu,
-		Header,
-		Footer,
-		Content
-	},
-	computed: mapState(['isMenuVisible', 'user'])
-}
-</script>
-
 <style>
 	* {
 		font-family: "Lato", sans-serif;
@@ -52,3 +24,73 @@ export default {
 			"footer footer";
 	}
 </style>
+
+<template>
+	<div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
+		<Header title="Volpato's Blog" :hideToggle="!user" :hideUserDropdown="!user" />
+		<Menu v-if="user" />
+		<Loading v-if="validatingToken" />
+		<Content v-else />
+		<Footer />
+	</div>
+</template>
+
+<script>
+import axios from "axios";
+import { mapState } from 'vuex';
+import { baseApiUrl, userKey } from '@/global';
+import Header from './components/template/Header';
+import Menu from './components/template/Menu';
+import Footer from './components/template/Footer';
+import Content from './components/template/Content';
+import Loading from "@/components/template/Loading";
+
+export default {
+	name: "App",
+	components: {
+		Menu,
+		Header,
+		Footer,
+		Content,
+		Loading
+	},
+	data() {
+		return {
+			validatingToken: true
+		}
+	},
+	computed: mapState(['isMenuVisible', 'user']),
+	created() {
+		this.validateToken();
+	},
+	methods: {
+		async validateToken() {
+			this.validatingToken = true;
+			const json = localStorage.getItem(userKey);
+			const userData = JSON.parse(json);
+			this.$store.commit('setUser', null);
+
+			if (!userData) {
+				this.validatingToken = false;
+				return this.$router.push({ name: 'auth' });
+			}
+
+			const res = await axios.post(`${baseApiUrl}/validateToken`, userData);
+
+			if (res.data) {
+				this.$store.commit('setUser', userData);
+				
+				if (this.$mq === 'xs' || this.$mq === 'sm') {
+					this.$store.commit('toggleMenu', false);
+				}
+
+			} else {
+				localStorage.removeItem(userKey);
+				this.$router.push({ name: 'auth' });
+			}
+
+			this.validatingToken = false;
+		}
+	}
+}
+</script>
